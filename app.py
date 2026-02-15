@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import time
+import os
 
 app = Flask(__name__)
+CORS(app)
 
 parking = {"SPOT_01": {"status": 0, "entry": 0}}
 LIMIT = 20  # 20 seconds demo overstay
@@ -34,5 +37,7 @@ def dashboard():
             output += f"{slot}: AVAILABLE\n"
     return "<pre>" + output + "</pre>"
 
+
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
